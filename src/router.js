@@ -34,6 +34,12 @@ const routes =  [
     name: "editLesson",
     component: () => import("./views/EditLesson.vue"),
     props: true
+  },
+  {
+    path: "/signin",
+    name: "signIn",
+    component: () => import("./views/signin/SignIn.vue"),
+    props: true
   }
 ];
 const router = createRouter({
