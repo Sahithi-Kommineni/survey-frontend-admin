@@ -5,6 +5,10 @@
     background: var(--darkBlack);
     font-family: "Poppins", sans-serif;
     color: var(--white);
+    overflow: hidden;
+}
+::-webkit-scrollbar{
+display: none;
 }
 
 .signIn__left {
