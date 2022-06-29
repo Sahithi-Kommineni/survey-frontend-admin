@@ -11,7 +11,7 @@
     </div>
     <div class="signIn__right">
       <h2>Sign In</h2>
-      <v-form class="signIn__form">
+      <v-form class="signIn__form" @submit="handleSignIn">
         <v-text-field
           v-model="formData.email"
           label="Email"
@@ -26,7 +26,7 @@
           :rules="[rules.required]"
           outlined
         ></v-text-field>
-        <button @click="handleSignIn" class="button__lightGreen">SIGN IN</button>
+        <button type="submit" class="button__lightGreen">SIGN IN</button>
       </v-form>
     </div>
   </div>
@@ -52,6 +52,13 @@ export default {
       },
       signInDashboardImage,
     };
+  },
+  methods: {
+    handleSignIn() {
+      if (this.formData.email && this.formData.password) {
+        this.$router.push({ name: "surveys" });
+      }
+    },
   },
 };
 </script>

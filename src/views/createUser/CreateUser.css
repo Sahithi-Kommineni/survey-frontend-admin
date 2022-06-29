@@ -13,8 +13,9 @@
 }
 
 .createUser__topHeadings {
-    border-bottom: 1px solid var(--fadedGrey);
     margin: 20px 0;
+    color: var(--white);
+    border-bottom: 1px solid var(--fadedGrey);
 }
 
 .primary__heading {
