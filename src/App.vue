@@ -18,6 +18,12 @@ export default {
     currentPath: "",
   }),
   created() {
+     const isAuthenticated = sessionStorage.getItem("authenticated");
+    if (isAuthenticated === "true") {
+      this.$router.push({ name: "tutorials" });
+    } else {
+      this.$router.push({ name: "signIn" });
+    }
     this.$watch(
       () => this.$route.params,
       () => {
