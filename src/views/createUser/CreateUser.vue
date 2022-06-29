@@ -1,23 +1,22 @@
 <template>
-  <div class="signIn">
-    <div class="signIn__left">
-      <div class="signIn__left--topHeadings">
-        <h1>SURVEY</h1>
-        <h5>Manage surveys & admins</h5>
+  <div class="createUser">
+    <div class="createUser__wrapper">
+      <div class="createUser__topHeadings">
+        <h1 class="primary__heading">Create User</h1>
+        <h5>Create Accounts For User</h5>
       </div>
-      <div class="signIn__left--imgWrapper">
-        <img :src="signInDashboardImage" alt="" />
-      </div>
-    </div>
-    <div class="signIn__right">
-      <h2>Sign In</h2>
-      <v-form class="signIn__form">
+      <v-form class="createUser__form">
         <v-text-field
           v-model="formData.email"
           label="Email"
           :rules="[rules.required, rules.email]"
           outlined
-          shaped
+        ></v-text-field>
+        <v-text-field
+          v-model="formData.username"
+          label="User Name"
+          :rules="[rules.required]"
+          outlined
         ></v-text-field>
         <v-text-field
           v-model="formData.password"
@@ -26,13 +25,14 @@
           :rules="[rules.required]"
           outlined
         ></v-text-field>
-        <button @click="handleSignIn" class="button__lightGreen">SIGN IN</button>
+        <button @click="handleCreateUser" class="button__lightGreen">
+          Create User
+        </button>
       </v-form>
     </div>
   </div>
 </template>
 <script>
-import signInDashboardImage from "../../assets/signInDashboard.svg";
 export default {
   data() {
     return {
@@ -40,6 +40,7 @@ export default {
       formData: {
         email: "",
         password: "",
+        username: "",
       },
       rules: {
         required: (value) => !!value || `Field Required !`,
@@ -50,7 +51,6 @@ export default {
           return pattern.test(value) || "Invalid e-mail.";
         },
       },
-      signInDashboardImage,
     };
   },
 };
