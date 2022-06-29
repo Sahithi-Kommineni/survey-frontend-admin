@@ -1,5 +1,5 @@
 import { createWebHistory, createRouter } from "vue-router";
-const routes =  [
+const routes = [
   {
     path: "/",
     alias: "/tutorials",
@@ -39,6 +39,12 @@ const routes =  [
     path: "/signin",
     name: "signIn",
     component: () => import("./views/signin/SignIn.vue"),
+    props: true
+  },
+  {
+    path: "/create-user",
+    name: "createUser",
+    component: () => import("./views/createUser/CreateUser.vue"),
     props: true
   }
 ];

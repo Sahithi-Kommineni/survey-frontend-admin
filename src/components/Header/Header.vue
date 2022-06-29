@@ -12,6 +12,5 @@
   </div>
 </template>
 <script>
-import './Header.css'
 export default {};
 </script>

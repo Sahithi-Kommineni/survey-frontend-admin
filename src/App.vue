@@ -8,7 +8,7 @@
 </template>
 <script>
 import Header from "./components/Header/Header.vue";
-
+import './styles/index.css';
 export default {
   name: "App",
   components: {
