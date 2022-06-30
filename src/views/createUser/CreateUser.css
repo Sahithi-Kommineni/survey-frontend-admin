@@ -1,0 +1,49 @@
+.createUser {
+    display: grid;
+    place-items: center;
+    height: 100%;
+    background: var(--darkBlack);
+    font-family: "Poppins", sans-serif;
+    color: var(--white);
+    padding: 0 20px;
+}
+
+.createUser__wrapper {
+    width: 50%;
+}
+
+.createUser__topHeadings {
+    margin: 20px 0;
+    color: var(--white);
+    border-bottom: 1px solid var(--fadedGrey);
+}
+
+.primary__heading {
+    font-family: "Poppins", cursive;
+    font-size: 30px;
+    font-weight: 400;
+    text-transform: uppercase;
+}
+
+.createUser__topHeadings h5 {
+    font-size: 20px;
+    font-family: "Sacramento", cursive;
+    padding: 5px 0;
+}
+
+.createUser__wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 60px;
+}
+
+.createUser__form {
+    width: 100%;
+}
+
+@media (max-width: 900px) {
+    .createUser__wrapper {
+        width: 100%;
+    }
+}
