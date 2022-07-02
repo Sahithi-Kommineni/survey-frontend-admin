@@ -7,6 +7,9 @@
       <router-link class="header__right--link" to="/surveys"
         >SURVEYS</router-link
       >
+      <router-link class="header__right--link" to="/create-user"
+        >CREATE USER</router-link
+      >
       <button class="button__white--bordered">Sign Out</button>
     </div>
   </div>
