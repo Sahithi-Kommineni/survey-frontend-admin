@@ -7,6 +7,12 @@ const routes = [
     component: () => import("./views/surveysList/SurveysList.vue")
   },
   {
+    path: "/users",
+    alias: "/users",
+    name: "users",
+    component: () => import("./views/usersList/UsersList.vue")
+  },
+  {
     path: "/signin",
     name: "signIn",
     component: () => import("./views/signin/SignIn.vue"),

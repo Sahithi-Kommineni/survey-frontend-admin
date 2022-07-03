@@ -8,5 +8,12 @@ class UserService {
             }
         });
     }
+    getAllUsers() {
+        return http.get(`/admin/allusers`, {
+            headers: {
+                "Authorization": token
+            }
+        });
+    }
 }
 export default new UserService();
