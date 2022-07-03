@@ -10,7 +10,8 @@
       </div>
     </div>
     <div class="signIn__right">
-      <h2>Sign In</h2>
+      <h2>Admin Sign In</h2>
+      <h5 class="error__msg">{{ message }}</h5>
       <v-form class="signIn__form" @submit="handleSignIn">
         <v-text-field
           v-model="formData.email"
@@ -63,7 +64,7 @@ export default {
       };
       AuthService.signIn(formData)
         .then((response) => {
-          if (response.status === 200 && response.data.role === 'admin' ) {
+          if (response.status === 200 && response.data.role === "admin") {
             localStorage.setItem("token", response.data.token);
             localStorage.setItem("userName", response.data.username);
             localStorage.setItem("role", response.data.role);

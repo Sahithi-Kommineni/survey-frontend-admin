@@ -24,3 +24,10 @@
 body {
     font-family: "Poppins", sans-serif;
 }
+
+.error__msg {
+    margin-bottom: 10px;
+    color: orangered;
+    text-align: center;
+    text-transform: uppercase;
+}

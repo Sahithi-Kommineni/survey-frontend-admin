@@ -5,6 +5,7 @@
         <h1 class="primary__heading">Create User</h1>
         <h5>Create Accounts For User</h5>
       </div>
+      <h5 class="error__msg">{{ message }}</h5>
       <v-form class="createUser__form" @submit="handleCreateUser">
         <v-text-field
           v-model="formData.email"
@@ -61,7 +62,7 @@ export default {
       };
       UserService.createUser(formData)
         .then((response) => {
-          this.$router.push({ name: "surveys" });
+          this.$router.push({ name: "users" });
         })
         .catch((e) => {
           this.message = e.response.data.message;
