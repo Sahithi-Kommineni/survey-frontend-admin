@@ -13,20 +13,10 @@
       <h2>Admin Sign In</h2>
       <h5 class="error__msg">{{ message }}</h5>
       <v-form class="signIn__form" @submit="handleSignIn">
-        <v-text-field
-          v-model="formData.email"
-          label="Email"
-          :rules="[rules.required, rules.email]"
-          outlined
-          shaped
-        ></v-text-field>
-        <v-text-field
-          v-model="formData.password"
-          label="Password"
-          type="password"
-          :rules="[rules.required]"
-          outlined
-        ></v-text-field>
+        <v-text-field v-model="formData.email" label="Email" :rules="[rules.required, rules.email]" outlined shaped>
+        </v-text-field>
+        <v-text-field v-model="formData.password" label="Password" type="password" :rules="[rules.required]" outlined>
+        </v-text-field>
         <button type="submit" class="button__lightGreen">SIGN IN</button>
       </v-form>
     </div>
@@ -69,6 +59,7 @@ export default {
             localStorage.setItem("userName", response.data.username);
             localStorage.setItem("role", response.data.role);
             localStorage.setItem("email", response.data.email);
+            localStorage.setItem("userId", response.data.id);
             this.$router.push({ name: "surveys" });
           }
         })
