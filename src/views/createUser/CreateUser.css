@@ -6,10 +6,15 @@
     font-family: "Poppins", sans-serif;
     color: var(--white);
     padding: 0 20px;
+    
 }
 
 .createUser__wrapper {
     width: 50%;
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center; */
+    /* padding: 0 60px; */
 }
 
 .createUser__topHeadings {
@@ -31,12 +36,6 @@
     padding: 5px 0;
 }
 
-.createUser__wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 0 60px;
-}
 
 .createUser__form {
     width: 100%;

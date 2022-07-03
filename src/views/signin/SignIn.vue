@@ -33,6 +33,7 @@
 </template>
 <script>
 import signInDashboardImage from "../../assets/signInDashboard.svg";
+import AuthService from "../../services/AuthService";
 export default {
   data() {
     return {
@@ -54,10 +55,25 @@ export default {
     };
   },
   methods: {
-    handleSignIn() {
-      if (this.formData.email && this.formData.password) {
-        this.$router.push({ name: "surveys" });
-      }
+    handleSignIn(e) {
+      e.preventDefault();
+      const formData = {
+        email: this.formData.email,
+        password: this.formData.password,
+      };
+      AuthService.signIn(formData)
+        .then((response) => {
+          if (response.status === 200 && response.data.role === 'admin' ) {
+            localStorage.setItem("token", response.data.token);
+            localStorage.setItem("userName", response.data.username);
+            localStorage.setItem("role", response.data.role);
+            localStorage.setItem("email", response.data.email);
+            this.$router.push({ name: "surveys" });
+          }
+        })
+        .catch((e) => {
+          this.message = e.response.data.message;
+        });
     },
   },
 };

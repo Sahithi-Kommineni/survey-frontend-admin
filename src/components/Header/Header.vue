@@ -4,7 +4,7 @@
       <router-link class="header__logo" to="/">SURVEY</router-link>
     </div>
     <div class="header__right">
-      <router-link class="header__right--link" to="/surveys"
+      <router-link class="header__right--link" to="/surveys" v-if="this.$route.path !== '/'"
         >SURVEYS</router-link
       >
       <router-link class="header__right--link" to="/create-user"
