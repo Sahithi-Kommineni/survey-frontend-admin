@@ -17,7 +17,7 @@
         <tr>
           <td data-column="Survey Name">{{ survey.title }}</td>
           <td data-column="Created By">{{ survey.createdBy }}</td>
-          <td data-column="Email">{{ survey.email }}</td>
+          <td data-column="Description">{{ survey.description }}</td>
           <td data-column="Operations">EDIT DELETE</td>
         </tr>
       </tbody>
@@ -31,13 +31,13 @@ export default {
       surveys: [
         {
           createdBy: "Elon Musk",
-          title: "test",
-          email: "test@mail.com",
+          title: "What motivates you to learn more",
+          description: "motivation survey",
         },
         {
           createdBy: "Tim Cook",
           title: "apple",
-          email: "apple@mail.com",
+          description: "apple@mail.com",
         },
       ],
     };
