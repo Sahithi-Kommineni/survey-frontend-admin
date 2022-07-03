@@ -5,7 +5,7 @@
         <h1 class="primary__heading">Create User</h1>
         <h5>Create Accounts For User</h5>
       </div>
-      <v-form class="createUser__form">
+      <v-form class="createUser__form" @submit="handleCreateUser">
         <v-text-field
           v-model="formData.email"
           label="Email"
@@ -13,7 +13,7 @@
           outlined
         ></v-text-field>
         <v-text-field
-          v-model="formData.username"
+          v-model="formData.userName"
           label="User Name"
           :rules="[rules.required]"
           outlined
@@ -25,14 +25,13 @@
           :rules="[rules.required]"
           outlined
         ></v-text-field>
-        <button @click="handleCreateUser" class="button__lightGreen">
-          Create User
-        </button>
+        <button type="submit" class="button__lightGreen">Create User</button>
       </v-form>
     </div>
   </div>
 </template>
 <script>
+import UserService from "../../services/UserService";
 export default {
   data() {
     return {
@@ -40,11 +39,10 @@ export default {
       formData: {
         email: "",
         password: "",
-        username: "",
+        userName: "",
       },
       rules: {
         required: (value) => !!value || `Field Required !`,
-        counter: (value) => value.length <= 20 || "Max 20 characters",
         email: (value) => {
           const pattern =
             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -52,6 +50,23 @@ export default {
         },
       },
     };
+  },
+  methods: {
+    handleCreateUser(e) {
+      e.preventDefault();
+      const formData = {
+        email: this.formData.email,
+        password: this.formData.password,
+        username: this.formData.userName,
+      };
+      UserService.createUser(formData)
+        .then((response) => {
+          this.$router.push({ name: "surveys" });
+        })
+        .catch((e) => {
+          this.message = e.response.data.message;
+        });
+    },
   },
 };
 </script>
