@@ -3,19 +3,31 @@
     <div class="signIn__left">
       <div class="signIn__left--topHeadings">
         <h1>SURVEY</h1>
-        <h5>Manage surveys & admins</h5>
+        <h5>Manage surveys</h5>
       </div>
       <div class="signIn__left--imgWrapper">
         <img :src="signInDashboardImage" alt="" />
       </div>
     </div>
     <div class="signIn__right">
-      <h2>Admin Sign In</h2>
+      <h2>Sign In</h2>
       <h5 class="error__msg">{{ message }}</h5>
       <v-form class="signIn__form" @submit="handleSignIn">
-        <v-text-field v-model="formData.email" label="Email" :rules="[rules.required, rules.email]" outlined shaped>
+        <v-text-field
+          v-model="formData.email"
+          label="Email"
+          :rules="[rules.required, rules.email]"
+          outlined
+          shaped
+        >
         </v-text-field>
-        <v-text-field v-model="formData.password" label="Password" type="password" :rules="[rules.required]" outlined>
+        <v-text-field
+          v-model="formData.password"
+          label="Password"
+          type="password"
+          :rules="[rules.required]"
+          outlined
+        >
         </v-text-field>
         <button type="submit" class="button__lightGreen">SIGN IN</button>
       </v-form>
@@ -54,7 +66,10 @@ export default {
       };
       AuthService.signIn(formData)
         .then((response) => {
-          if (response.status === 200 && response.data.role === "admin") {
+          if (
+            response.status === 200 &&
+            (response.data.role === "admin" || response.data.role === "user")
+          ) {
             localStorage.setItem("token", response.data.token);
             localStorage.setItem("userName", response.data.username);
             localStorage.setItem("role", response.data.role);

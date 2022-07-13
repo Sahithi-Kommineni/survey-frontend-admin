@@ -2,7 +2,7 @@
   <div class="surveys__list">
     <div class="createUser__topHeadings">
       <h1 class="primary__heading">Surveys List</h1>
-      <h5>Manage surveys created by admin & user !</h5>
+      <h5>Manage surveys !</h5>
     </div>
     <table>
       <thead>
