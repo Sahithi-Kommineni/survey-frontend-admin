@@ -23,7 +23,12 @@
         v-show="userRole === 'admin'"
         >CREATE USER</router-link
       >
-
+      <router-link
+        class="header__right--link"
+        to="/create-survey"
+        v-show="userRole === 'user'"
+        >CREATE SURVEY</router-link
+      >
       <button class="button__white--bordered" @click="handleSignOut">
         Sign Out
       </button>
