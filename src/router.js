@@ -23,6 +23,12 @@ const routes = [
     name: "createUser",
     component: () => import("./views/createUser/CreateUser.vue"),
     props: true
+  },
+  {
+    path: "/create-survey",
+    name: "createSurvey",
+    component: () => import("./views/createSurvey/CreateSurvey.vue"),
+    props: true
   }
 ];
 const router = createRouter({
