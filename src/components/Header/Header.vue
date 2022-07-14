@@ -10,17 +10,33 @@
         v-if="this.$route.path !== '/'"
         >SURVEYS</router-link
       >
-      <router-link class="header__right--link" to="/users">USERS</router-link>
-      <router-link class="header__right--link" to="/create-user"
+
+      <router-link
+        class="header__right--link"
+        to="/users"
+        v-show="userRole === 'admin'"
+        >USERS</router-link
+      >
+      <router-link
+        class="header__right--link"
+        to="/create-user"
+        v-show="userRole === 'admin'"
         >CREATE USER</router-link
       >
-      <button class="button__white--bordered" @click="handleSignOut">Sign Out</button></div>
+
+      <button class="button__white--bordered" @click="handleSignOut">
+        Sign Out
+      </button>
+    </div>
   </div>
 </template>
 <script>
 import AuthService from "../../services/AuthService";
 export default {
-    methods: {
+  props: {
+    userRole: String,
+  },
+  methods: {
     handleSignOut() {
       const userId = localStorage.getItem("userId");
       AuthService.signOut(userId).then((response) => {
@@ -31,7 +47,7 @@ export default {
         localStorage.removeItem("userId");
         this.$router.push({ name: "signIn" });
       });
-    }
-  }
+    },
+  },
 };
 </script>
