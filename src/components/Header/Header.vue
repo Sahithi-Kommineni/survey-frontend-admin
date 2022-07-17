@@ -10,25 +10,22 @@
         v-if="this.$route.path !== '/'"
         >SURVEYS</router-link
       >
-
-      <router-link
-        class="header__right--link"
-        to="/users"
-        v-show="userRole === 'admin'"
-        >USERS</router-link
-      >
-      <router-link
-        class="header__right--link"
-        to="/create-user"
-        v-show="userRole === 'admin'"
-        >CREATE USER</router-link
-      >
-      <router-link
-        class="header__right--link"
-        to="/create-survey"
-        v-show="userRole === 'user'"
-        >CREATE SURVEY</router-link
-      >
+      <span v-show="userRole === 'admin'">
+        <router-link
+          class="header__right--link"
+          to="/users"
+          v-show="userRole === 'admin'"
+          >USERS</router-link
+        >
+        <router-link class="header__right--link" to="/create-user"
+          >CREATE USER</router-link
+        >
+      </span>
+      <span v-show="userRole === 'user'">
+        <router-link class="header__right--link" to="/create-survey"
+          >CREATE SURVEY</router-link
+        >
+      </span>
       <button class="button__white--bordered" @click="handleSignOut">
         Sign Out
       </button>
