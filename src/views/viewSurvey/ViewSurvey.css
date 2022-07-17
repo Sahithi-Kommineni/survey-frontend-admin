@@ -1,0 +1,36 @@
+.viewSurvey__questions {
+    padding: 10px 60px;
+    color: var(--white);
+    list-style: none;
+}
+
+.viewSurvey__question {
+    border: 1px solid var(--fadedGrey);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 10px 30px #2a2a2a6c;
+}
+
+.viewSurvey__question h5 {
+    padding: 10px 0;
+    text-transform: uppercase;
+}
+
+.viewSurvey__choices {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--fadedGrey);
+}
+
+.viewSurvey__choice {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--fadedGrey);
+}
+
+.highlight {
+    color: var(--lightGreen);
+    margin: 0 10px;
+}
