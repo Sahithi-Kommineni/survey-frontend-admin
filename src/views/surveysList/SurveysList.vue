@@ -26,7 +26,12 @@
           </td>
           <td data-column="Operations">
             <span class="operations__wrapper">
-              <v-icon large color="blue darken-2" class="icon">
+              <v-icon
+                large
+                color="blue darken-2"
+                class="icon"
+                @click="pushToView(survey.id)"
+              >
                 mdi-format-list-bulleted-type
               </v-icon>
               <v-icon large color="red darken-2" class="icon">
@@ -50,12 +55,16 @@ export default {
           description: "motivation survey",
           username: "Elon Musk",
           isPublished: true,
+          id: 1,
         },
       ],
       userRole: localStorage.getItem("role"),
     };
   },
   methods: {
+    pushToView(id) {
+      this.$router.push({ name: "viewSurvey", params: { id } });
+    },
     fetchSurveys() {
       SurveyService.getAllSurveys()
         .then((response) => {

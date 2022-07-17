@@ -15,5 +15,12 @@ class SurveyService {
             }
         });
     }
+    getSurvey(surveyId) {
+        return http.get(`/survey/${surveyId}`, {
+            headers: {
+                "Authorization": localStorage.getItem('token')
+            }
+        });
+    }
 }
 export default new SurveyService();

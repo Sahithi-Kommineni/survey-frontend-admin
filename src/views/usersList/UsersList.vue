@@ -18,9 +18,6 @@
           <td data-column="Email">{{ user.email }}</td>
           <td data-column="Operations">
             <span class="operations__wrapper">
-              <v-icon large color="blue darken-2" class="icon">
-                mdi-format-list-bulleted-type
-              </v-icon>
               <v-icon large color="red darken-2" class="icon">
                 mdi-delete
               </v-icon>

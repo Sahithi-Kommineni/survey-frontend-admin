@@ -4,6 +4,7 @@
 @import url('../components/Header/Header.css');
 @import url('../views/surveysList/SurveysList.css');
 @import url('../views/createSurvey/CreateSurvey.css');
+@import url('../views/viewSurvey/ViewSurvey.css');
 
 @import url("https://fonts.googleapis.com/css2?family=Monoton&family=Poppins:wght@500;700;800&family=Sacramento&display=swap");
 
