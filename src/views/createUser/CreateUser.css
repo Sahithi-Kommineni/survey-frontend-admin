@@ -5,8 +5,7 @@
     background: var(--darkBlack);
     font-family: "Poppins", sans-serif;
     color: var(--white);
-    padding: 0 20px;
-    
+    padding: 0 20px;  
 }
 
 .createUser__wrapper {

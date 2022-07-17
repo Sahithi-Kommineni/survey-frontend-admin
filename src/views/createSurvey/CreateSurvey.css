@@ -1,0 +1,107 @@
+.create__survey {
+    padding: 75px 20px 0 20px;
+    background-color: var(--darkBlack);
+    min-height: 100vh;
+    max-height: auto;
+
+}
+
+.createSurvey__form {
+    display: grid;
+    grid-template-columns: 40% 1fr;
+    padding: 20px;
+    column-gap: 20px;
+}
+
+.createSurvey__left {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    height: 50vh;
+    width: 100%;
+    background: var(--darkBlack);
+    font-family: "Poppins", sans-serif;
+    color: var(--white);
+    position: sticky;
+}
+
+.createSurvey__right {
+    padding: 0 20px;
+    color: var(--white);
+    border-left: 1px solid var(--fadedGrey);
+}
+
+.add__question {
+    display: grid;
+    grid-template-columns: 1fr 10%;
+    align-items: center;
+    padding: 10px;
+}
+
+.survey__questions--wrapper {
+    padding: 10px 0;
+    margin: 10px 0;
+    border-top: 1px solid #696a6985;
+}
+
+
+.survey__question {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--lightGreen);
+    margin: 15px 0;
+    padding: 10px 10px 5px 10px;
+    box-shadow: 0px 20px 30px #33323241;
+    border-radius: 5px;
+}
+
+.survey__question--heading {
+    background: var(--lightBlack);
+    padding: 5px;
+    text-align: center;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+
+.survey__question--bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    border-top: 1px solid #696a6985;
+}
+
+.survey__question--bottom .v-input,
+.survey__question--bottom .v-input--horizontal {
+    display: flex !important;
+    width: 25% !important;
+    flex: none !important;
+}
+
+.survey__question--option {
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    cursor: pointer;
+}
+
+.survey__icon {
+    height: 40px;
+    width: 40px;
+    border: 1px solid rgb(97, 97, 204);
+    font-size: 25px;
+    border-radius: 50%;
+    margin: 0 10px;
+}
+
+.del__icon {
+    border: 1px solid rgb(243, 9, 9);
+}
+
+.align__icon {
+    margin: -25px 0px 0 20px;
+}
