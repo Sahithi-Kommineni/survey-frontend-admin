@@ -2,28 +2,36 @@
   <div class="surveys__list">
     <div class="createUser__topHeadings">
       <h1 class="primary__heading">Surveys List</h1>
-      <h5>Manage surveys !</h5>
+      <h5>Manage surveys</h5>
     </div>
     <table>
       <thead>
         <tr>
           <th>Survey Name</th>
-          <th>Created By</th>
-          <th>Email</th>
+          <th>Survey Description</th>
+          <th>Status</th>
+          <th v-show="userRole === 'admin'">Created By</th>
           <th>Operations</th>
         </tr>
       </thead>
       <tbody v-for="survey in surveys">
         <tr>
           <td data-column="Survey Name">{{ survey.title }}</td>
-          <td data-column="Created By">{{ survey.createdBy }}</td>
-          <td data-column="Description">{{ survey.description }}</td>
+          <td data-column="Survey Description">{{ survey.description }}</td>
+          <td data-column="Status">
+            {{ survey.isPublished ? "Published" : "UnPublished" }}
+          </td>
+          <td v-show="userRole === 'admin'" data-column="Created By">
+            {{ survey.username }}
+          </td>
           <td data-column="Operations">
             <span class="operations__wrapper">
               <v-icon large color="blue darken-2" class="icon">
                 mdi-format-list-bulleted-type
               </v-icon>
-              <v-icon large color="red darken-2" class="icon"> mdi-delete </v-icon>
+              <v-icon large color="red darken-2" class="icon">
+                mdi-delete
+              </v-icon>
             </span>
           </td>
         </tr>
@@ -32,22 +40,34 @@
   </div>
 </template>
 <script>
+import SurveyService from "../../services/SurveyService";
 export default {
   data() {
     return {
       surveys: [
         {
-          createdBy: "Elon Musk",
           title: "What motivates you to learn more",
           description: "motivation survey",
-        },
-        {
-          createdBy: "Tim Cook",
-          title: "apple",
-          description: "apple@mail.com",
+          username: "Elon Musk",
+          isPublished: true,
         },
       ],
+      userRole: localStorage.getItem("role"),
     };
+  },
+  methods: {
+    fetchSurveys() {
+      SurveyService.getAllSurveys()
+        .then((response) => {
+          this.surveys = response.data;
+        })
+        .catch((e) => {
+          this.message = e.response.data.message;
+        });
+    },
+  },
+  mounted() {
+    this.fetchSurveys();
   },
 };
 </script>

@@ -9,7 +9,7 @@ class SurveyService {
         });
     }
     getAllSurveys() {
-        return http.get(`/admin/allusers`, {
+        return http.get(`/surveylist`, {
             headers: {
                 "Authorization": localStorage.getItem('token')
             }
