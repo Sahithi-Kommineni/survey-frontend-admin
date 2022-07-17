@@ -19,8 +19,8 @@
           outlined
         ></v-text-field>
         <v-switch
-          :label="`${survey.published ? 'UnPublish' : 'Publish'}`"
-          v-model="survey.published"
+          :label="`${survey.isPublished ? 'UnPublish' : 'Publish'}`"
+          v-model="survey.isPublished"
           inset
           color="indigo darken-3"
         ></v-switch>
@@ -30,7 +30,7 @@
         <div class="survey__questions--wrapper">
           <div class="add__question">
             <v-select
-              :items="survey.questionOptions"
+              :items="survey.questionChoices"
               v-model="survey.questionType"
               label="Select Question Type"
             ></v-select>
@@ -49,13 +49,49 @@
               :key="index"
             >
               <div class="survey__question--heading">
-                <h3>Question Type - {{ question.question_type }}</h3>
+                <h3>{{ question.type }} : Question</h3>
               </div>
               <v-text-field
                 v-model="question.title"
                 label="Question"
                 :rules="[rules.required]"
               ></v-text-field>
+              <!-- MCQ -->
+              <div v-if="question.type === 'mcq'">
+                <h4 class="choices__heading">
+                  ADD CHOICES
+                  <v-icon
+                    large
+                    color="blue"
+                    @click="handleAddChoice(index)"
+                    class="icon survey__icon"
+                    >mdi-plus</v-icon
+                  >
+                </h4>
+                <div
+                  class="survey__question--choices"
+                  v-for="(item, optionIndex) in question.choices"
+                  :key="optionIndex"
+                >
+                  <div class="survey__question--choice">
+                    <v-text-field
+                      v-model="item.choice"
+                      :label="`Option ${optionIndex + 1}`"
+                      :rules="[rules.required]"
+                    >
+                    </v-text-field>
+                    <v-icon
+                      large
+                      color="red"
+                      @click="handleDeleteChoice(index, optionIndex)"
+                      v-show="optionIndex !== 0"
+                      class="icon survey__icon del__icon"
+                    >
+                      mdi-minus</v-icon
+                    >
+                  </div>
+                </div>
+              </div>
               <div class="survey__question--bottom">
                 <v-switch
                   label="Required"
@@ -83,7 +119,7 @@
   </div>
 </template>
 <script>
-import UserService from "../../services/UserService";
+import SurveyService from "../../services/SurveyService";
 import { FormTextBoxObj } from "./surveyHelper";
 export default {
   data() {
@@ -92,10 +128,16 @@ export default {
       survey: {
         title: "",
         description: "",
-        questions: [],
-        published: false,
+        isPublished: false,
+        questions: [
+          {
+            title: "",
+            required: false,
+            type: "text",
+          },
+        ],
         questionType: "",
-        questionOptions: ["text-box"],
+        questionChoices: ["text", "mcq", "paragraph"],
       },
       rules: {
         required: (value) => !!value || `Field Required !`,
@@ -111,8 +153,24 @@ export default {
       });
       let questions = [...this.survey.questions];
       switch (this.survey.questionType) {
-        case "text-box":
-          questions = [...questions, new FormTextBoxObj("text-box")];
+        case "text":
+          questions = [...questions, new FormTextBoxObj("text")];
+          break;
+        case "paragraph":
+          questions = [...questions, new FormTextBoxObj("paragraph")];
+          break;
+        case "mcq":
+          questions = [
+            ...questions,
+            {
+              ...new FormTextBoxObj("mcq"),
+              choices: [
+                {
+                  choice: "",
+                },
+              ],
+            },
+          ];
           break;
       }
       this.survey.questions = questions;
@@ -120,16 +178,40 @@ export default {
     handleDeleteQuestion(id) {
       this.survey.questions = this.survey.questions.filter((_, i) => i !== id);
     },
+    handleAddChoice(id) {
+      let questions = [...this.survey.questions];
+      let currentQuestionOptions = questions[id].choices;
+      currentQuestionOptions = [
+        ...currentQuestionOptions,
+        {
+          choice: "",
+        },
+      ];
+      this.survey.questions[id].choices = currentQuestionOptions;
+    },
+    handleDeleteChoice(questionId, optionId) {
+      let questions = [...this.survey.questions];
+      let currentQuestionOptions = questions[questionId].choices;
+      this.survey.questions[questionId].choices = currentQuestionOptions.filter(
+        (_, i) => i !== optionId
+      );
+    },
     handleCreateSurvey(e) {
       e.preventDefault();
-      console.log("survey", survey);
-      //   UserService.createUser(survey)
-      //     .then((response) => {
-      //       this.$router.push({ name: "users" });
-      //     })
-      //     .catch((e) => {
-      //       this.message = e.response.data.message;
-      //     });
+      const { title, description, isPublished, questions } = this.survey;
+      const surveyData = {
+        title,
+        description,
+        isPublished,
+        questions,
+      };
+      SurveyService.createSurvey(surveyData)
+        .then((response) => {
+          this.$router.push({ name: "surveys" });
+        })
+        .catch((e) => {
+          this.message = e.response.data.message;
+        });
     },
   },
 };
