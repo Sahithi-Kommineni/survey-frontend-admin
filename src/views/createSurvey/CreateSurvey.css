@@ -80,7 +80,7 @@
     flex: none !important;
 }
 
-.survey__question--option {
+.survey__question--choice {
     display: flex;
     align-items: center;
 }
@@ -100,8 +100,25 @@
 
 .del__icon {
     border: 1px solid rgb(243, 9, 9);
+    margin: -25px 0px 0 20px;
 }
 
 .align__icon {
     margin: -25px 0px 0 20px;
+}
+
+.choices__heading {
+    text-align: center;
+    padding: 10px 0;
+    margin-top: -25px
+}
+
+@media (max-width: 900px) {
+    .createSurvey__form {
+        grid-template-columns: 1fr;
+        padding: 0px;
+    }
+    .createSurvey__right {
+        border-left: none;
+    }
 }
