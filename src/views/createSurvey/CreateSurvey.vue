@@ -103,7 +103,7 @@
                 <v-icon
                   large
                   color="red"
-                  class="actions__icon"
+                  class="actions__icon icon"
                   @click="handleDeleteQuestion(index)"
                 >
                   mdi-delete-outline

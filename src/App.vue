@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <Header v-if="currentPath !== '/signin'" :userRole="userRole" />
+    <Header v-if="currentPath !== '/signin'" :userRole="userRole"/>
     <router-view />
   </v-app>
 </template>
