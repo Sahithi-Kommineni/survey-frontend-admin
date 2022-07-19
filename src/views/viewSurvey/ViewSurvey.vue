@@ -19,7 +19,7 @@
     </div>
     <ul
       class="viewSurvey__questions"
-      v-for="question in survey.questions"
+      v-for="question in survey.question"
       :key="question.id"
     >
       <li class="viewSurvey__question">
@@ -30,20 +30,26 @@
           <span class="highlight">QUESTION TYPE :</span> {{ question.type }}
         </h5>
         <!-- IF CHOICES -->
-        <h3 v-show="question?.choices && question.choices.length > 0 && question.type === 'mcq'">
+        <h3
+          v-show="
+            question?.choice &&
+            question.choice.length > 0 &&
+            question.type === 'mcq'
+          "
+        >
           CHOICES
         </h3>
         <section
           class="viewSurvey__choices"
           v-show="
-            question?.choices &&
-            question?.choices.length > 0 &&
+            question?.choice &&
+            question?.choice.length > 0 &&
             question.type === 'mcq'
           "
         >
           <span
             class="viewSurvey__choice"
-            v-for="(item, i) in question.choices"
+            v-for="(item, i) in question.choice"
             :key="i"
             >{{ item.choice }}</span
           >
@@ -59,54 +65,7 @@ export default {
   props: ["id"],
   data() {
     return {
-      survey: {
-        title: "What motivates you to learn more",
-        description: "motivation survey",
-        username: "Elon Musk",
-        isPublished: true,
-        questions: [
-          {
-            question: "What motivates you to learn more",
-            type: "mcq",
-            choices: [
-              {
-                choice: "Choice 1",
-              },
-              {
-                choice: "Choice 2",
-              },
-              {
-                choice: "Choice 3",
-              },
-              {
-                choice: "Choice 4",
-              },
-            ],
-          },
-                    {
-            question: "What motivates you to learn more",
-            type: "mcq",
-            choices: [
-              {
-                choice: "Choice 1",
-              },
-              {
-                choice: "Choice 2",
-              },
-              {
-                choice: "Choice 3",
-              },
-              {
-                choice: "Choice 4",
-              },
-            ],
-          },
-          {
-            question: "What is space",
-            type: "text",
-          },
-        ],
-      },
+      survey: {},
       userRole: localStorage.getItem("role"),
     };
   },
