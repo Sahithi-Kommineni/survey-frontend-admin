@@ -34,7 +34,12 @@
               >
                 mdi-format-list-bulleted-type
               </v-icon>
-              <v-icon large color="red darken-2" class="icon">
+              <v-icon
+                large
+                color="red darken-2"
+                class="icon"
+                @click="deleteSurvey(survey.id)"
+              >
                 mdi-delete
               </v-icon>
             </span>
@@ -64,6 +69,15 @@ export default {
   methods: {
     pushToView(id) {
       this.$router.push({ name: "viewSurvey", params: { id } });
+    },
+    deleteSurvey(id) {
+      SurveyService.deleteSurvey(id)
+        .then(() => {
+          this.fetchSurveys();
+        })
+        .catch((e) => {
+          this.message = e.response.data.message;
+        });
     },
     fetchSurveys() {
       SurveyService.getAllSurveys()
