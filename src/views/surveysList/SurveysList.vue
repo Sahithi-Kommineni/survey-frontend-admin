@@ -18,8 +18,14 @@
         <tr>
           <td data-column="Survey Name">{{ survey.title }}</td>
           <td data-column="Survey Description">{{ survey.description }}</td>
-          <td data-column="Status">
-            {{ survey.isPublished ? "Published" : "UnPublished" }}
+          <td data-column="Status" class="survey__status--toggle">
+            <v-switch
+              :label="`${survey.isPublished ? 'Published' : 'UnPublished'}`"
+              v-model="survey.isPublished"
+              @change="handleSurveyStatus(survey)"
+              inset
+              color="success"
+            ></v-switch>
           </td>
           <td v-show="userRole === 'admin'" data-column="Created By">
             {{ survey.username }}
@@ -72,6 +78,19 @@ export default {
     },
     deleteSurvey(id) {
       SurveyService.deleteSurvey(id)
+        .then(() => {
+          this.fetchSurveys();
+        })
+        .catch((e) => {
+          this.message = e.response.data.message;
+        });
+    },
+    handleSurveyStatus(survey) {
+      const apiObj = {
+        id: survey.id,
+        isPublished: survey.isPublished,
+      };
+      SurveyService.updateSurveyStatus(apiObj)
         .then(() => {
           this.fetchSurveys();
         })

@@ -24,10 +24,17 @@ class SurveyService {
     }
     deleteSurvey(surveyId) {
         return http.delete(`/user/survey/${surveyId}`, {
-          headers: {
-            'Authorization': localStorage.getItem('token')
-          }
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            }
         });
-      }
+    }
+    updateSurveyStatus(surveyData) {
+        return http.put(`/survey/${surveyData.id}/${surveyData.isPublished ? 'publish' : 'unpublish'}`, {}, {
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            }
+        });
+    }
 }
 export default new SurveyService();
