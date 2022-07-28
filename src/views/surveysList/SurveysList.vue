@@ -26,6 +26,25 @@
               inset
               color="success"
             ></v-switch>
+            <div class="overlay" v-if="openModal === true">
+              <div class="modal">
+                <h1>ENTER CLIENT EMAIL ID</h1>
+                <v-row class="dialog__input">
+                  <v-text-field
+                    v-model="clientEmail"
+                    label="Enter client email id"
+                    :rules="[rules.required, rules.email]"
+                  ></v-text-field>
+                </v-row>
+
+                <span class="icon dialog__close--icon" @click="closeDialog">
+                  X
+                </span>
+                <button @click="sendMail" class="button__lightGreen share__btn">
+                  SEND SURVEY LINK
+                </button>
+              </div>
+            </div>
           </td>
           <td v-show="userRole === 'admin'" data-column="Created By">
             {{ survey.username }}
@@ -48,6 +67,14 @@
               >
                 mdi-delete
               </v-icon>
+              <v-icon
+                large
+                color="white darken-2"
+                class="icon"
+                @click="openDialog"
+              >
+                mdi-share
+              </v-icon>
             </span>
           </td>
         </tr>
@@ -60,6 +87,8 @@ import SurveyService from "../../services/SurveyService";
 export default {
   data() {
     return {
+      clientEmail: "",
+      openModal: false,
       surveys: [
         {
           title: "What motivates you to learn more",
@@ -70,6 +99,14 @@ export default {
         },
       ],
       userRole: localStorage.getItem("role"),
+      rules: {
+        required: (value) => !!value || `Field Required !`,
+        email: (value) => {
+          const pattern =
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          return pattern.test(value) || "Invalid e-mail.";
+        },
+      },
     };
   },
   methods: {
@@ -84,6 +121,12 @@ export default {
         .catch((e) => {
           this.message = e.response.data.message;
         });
+    },
+    openDialog() {
+      this.openModal = true;
+    },
+    closeDialog() {
+      this.openModal = false;
     },
     handleSurveyStatus(survey) {
       const apiObj = {
