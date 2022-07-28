@@ -5,7 +5,7 @@
     max-height: auto;
 }
 
-.surveys__list div {
+.createUser__topHeadings {
     width: 80%;
     margin: 20px auto;
 }
@@ -42,8 +42,26 @@ tr:nth-of-type(odd) {
     align-items: center;
     justify-content: space-around;
 }
-.icon{
+
+.icon {
     cursor: pointer;
+}
+
+.survey__status--toggle .v-input__details {
+    display: none !important;
+}
+
+.survey__status--toggle .v-input {
+    display: inline-block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 25px !important;
+    margin-left: 100px !important;
+    width: 170px;
+}
+
+.survey__status--toggle .v-input--density-default {
+    --v-input-control-height: 40px !important;
 }
 
 /*
@@ -102,5 +120,8 @@ tr:nth-of-type(odd) {
         color: var(--white);
         font-weight: bold;
     }
-
+    .survey__status--toggle .v-input {
+        margin-left: 10px !important;
+        width: 150px;
+    }
 }
