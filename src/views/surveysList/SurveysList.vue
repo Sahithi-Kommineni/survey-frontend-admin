@@ -14,7 +14,7 @@
           <th>Operations</th>
         </tr>
       </thead>
-      <tbody v-for="survey in surveys">
+      <tbody v-for="survey in surveys" :key="survey.id">
         <tr>
           <td data-column="Survey Name">{{ survey.title }}</td>
           <td data-column="Survey Description">{{ survey.description }}</td>
@@ -27,23 +27,24 @@
               color="success"
             ></v-switch>
             <div class="overlay" v-if="openModal === true">
-              <div class="modal">
+              <v-form class="modal">
                 <h1>ENTER CLIENT EMAIL ID</h1>
-                <v-row class="dialog__input">
-                  <v-text-field
-                    v-model="clientEmail"
-                    label="Enter client email id"
-                    :rules="[rules.required, rules.email]"
-                  ></v-text-field>
-                </v-row>
-
+                <v-text-field
+                  v-model="clientEmail"
+                  label="Enter client email id"
+                  :rules="[rules.required, rules.email]"
+                  class="dialog__input"
+                ></v-text-field>
                 <span class="icon dialog__close--icon" @click="closeDialog">
                   X
                 </span>
-                <button @click="sendMail" class="button__lightGreen share__btn">
+                <button
+                  @click="sendMail(survey.id)"
+                  class="button__lightGreen share__btn"
+                >
                   SEND SURVEY LINK
                 </button>
-              </div>
+              </v-form>
             </div>
           </td>
           <td v-show="userRole === 'admin'" data-column="Created By">
@@ -139,6 +140,23 @@ export default {
         })
         .catch((e) => {
           this.message = e.response.data.message;
+        });
+    },
+    sendMail(surveyId) {
+      const linkData = {
+        surveyLink: `http://54.162.114.150/survey-frontend-survey/${surveyId}/`,
+        email: this.clientEmail,
+      };
+      SurveyService.shareLink(linkData)
+        .then((response) => {
+          if (response.status === 200) {
+            this.$router.push({ name: "surveys" });
+            this.clientEmail = "";
+            this.openModal = false;
+          }
+        })
+        .catch((e) => {
+          this.submitLinkMessage = e.response.data.message;
         });
     },
     fetchSurveys() {
