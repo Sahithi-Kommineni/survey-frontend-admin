@@ -36,5 +36,12 @@ class SurveyService {
             }
         });
     }
+    shareLink(linkData) {
+        return http.post(`/survey/sendemail`, linkData, {
+          headers: {
+            'Authorization': localStorage.getItem('token')
+          }
+        });
+      }
 }
 export default new SurveyService();
