@@ -122,6 +122,6 @@ tr:nth-of-type(odd) {
     }
     .survey__status--toggle .v-input {
         margin-left: 10px !important;
-        width: 150px;
+        width: 160px;
     }
 }

@@ -1,16 +1,20 @@
 <template>
   <div class="surveys__list">
     <div class="createUser__topHeadings">
-      <h1 class="primary__heading">Surveys List</h1>
-      <h5>Manage surveys</h5>
-    </div>
+      <h1 class="primary__heading">
+        <span v-if="this.userId">User</span> Surveys List
+      </h1>
+      <h5>
+        Manage <span v-if="this.userId">{{ userName }}</span> surveys
+      </h5>
+    </div>x
     <table>
       <thead>
         <tr>
           <th>Survey Name</th>
           <th>Survey Description</th>
           <th>Status</th>
-          <th v-show="userRole === 'admin'">Created By</th>
+          <th v-show="userRole === 'admin' && !this.userId">Created By</th>
           <th>Operations</th>
         </tr>
       </thead>
@@ -47,7 +51,10 @@
               </v-form>
             </div>
           </td>
-          <td v-show="userRole === 'admin'" data-column="Created By">
+          <td
+            v-show="userRole === 'admin' && !this.userId"
+            data-column="Created By"
+          >
             {{ survey.username }}
           </td>
           <td data-column="Operations">
@@ -72,6 +79,7 @@
                 large
                 color="white darken-2"
                 class="icon"
+                v-show="survey.isPublished"
                 @click="openDialog"
               >
                 mdi-share
@@ -85,20 +93,15 @@
 </template>
 <script>
 import SurveyService from "../../services/SurveyService";
+import UserService from "../../services/UserService";
 export default {
+  props: ["userId"],
   data() {
     return {
       clientEmail: "",
       openModal: false,
-      surveys: [
-        {
-          title: "What motivates you to learn more",
-          description: "motivation survey",
-          username: "Elon Musk",
-          isPublished: true,
-          id: 1,
-        },
-      ],
+      surveys: [],
+      userName: "",
       userRole: localStorage.getItem("role"),
       rules: {
         required: (value) => !!value || `Field Required !`,
@@ -160,13 +163,25 @@ export default {
         });
     },
     fetchSurveys() {
-      SurveyService.getAllSurveys()
-        .then((response) => {
-          this.surveys = response.data;
-        })
-        .catch((e) => {
-          this.message = e.response.data.message;
-        });
+      if (this.userId) {
+        UserService.getUserData(this.userId)
+          .then((res) => {
+            const response = res.data;
+            this.surveys = response.survey;
+            this.userName = response.username;
+          })
+          .catch((e) => {
+            this.message = e.response.data.message;
+          });
+      } else {
+        SurveyService.getAllSurveys()
+          .then((response) => {
+            this.surveys = response.data;
+          })
+          .catch((e) => {
+            this.message = e.response.data.message;
+          });
+      }
     },
   },
   mounted() {

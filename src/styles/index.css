@@ -61,6 +61,7 @@ body {
     transition: all 0.5s ease-in-out;
     text-align: center;
 }
+
 .modal .v-input {
     margin-left: 0 !important;
 }
@@ -83,4 +84,18 @@ body {
 
 .share__btn {
     margin-top: 60px;
+}
+
+@media screen and (max-width:900px) {
+    .overlay {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        right: 0;
+        left: 0;
+        z-index: 1000;
+    }
+    .modal {
+        width: 100%;
+    }
 }
