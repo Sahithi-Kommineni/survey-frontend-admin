@@ -35,6 +35,12 @@ const routes = [
     name: "viewSurvey",
     component: () => import("./views/viewSurvey/ViewSurvey.vue"),
     props: true
+  },
+  {
+    path: "/view-user/:userId",
+    name: "viewUser",
+    component: () => import("./views/surveysList/SurveysList.vue"),
+    props: true
   }
 ];
 const router = createRouter({

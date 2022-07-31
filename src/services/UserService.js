@@ -15,5 +15,12 @@ class UserService {
             }
         });
     }
+    getUserData(userId) {
+        return http.get(`/admin/${userId}`, {
+            headers: {
+                "Authorization": localStorage.getItem('token')
+            }
+        });
+    }
 }
 export default new UserService();
