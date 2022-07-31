@@ -8,6 +8,13 @@ class SurveyService {
             }
         });
     }
+    updateSurvey(surveyData, surveyId) {
+        return http.put(`/user/survey/edit?surveyId=${surveyId}`, surveyData, {
+            headers: {
+                "Authorization": localStorage.getItem('token')
+            }
+        });
+    }
     getAllSurveys() {
         return http.get(`/surveylist`, {
             headers: {
@@ -38,10 +45,10 @@ class SurveyService {
     }
     shareLink(linkData) {
         return http.post(`/survey/sendemail`, linkData, {
-          headers: {
-            'Authorization': localStorage.getItem('token')
-          }
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            }
         });
-      }
+    }
 }
 export default new SurveyService();

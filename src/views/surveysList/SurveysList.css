@@ -45,6 +45,7 @@ tr:nth-of-type(odd) {
 
 .icon {
     cursor: pointer;
+    margin: 0 5px;
 }
 
 .survey__status--toggle .v-input__details {
