@@ -26,7 +26,12 @@
               >
                 mdi-format-list-bulleted-type
               </v-icon>
-              <v-icon large color="red darken-2" class="icon">
+              <v-icon
+                large
+                color="red darken-2"
+                class="icon"
+                @click="deleteUser(user.id)"
+              >
                 mdi-delete
               </v-icon>
             </span>
@@ -46,8 +51,17 @@ export default {
   },
   methods: {
     pushToView(id) {
-      console.log("id",id);
+      console.log("id", id);
       this.$router.push({ name: "viewUser", params: { userId: id } });
+    },
+    deleteUser(id) {
+      UserService.deleteUser(id)
+        .then(() => {
+          this.fetchUsers();
+        })
+        .catch((e) => {
+          this.message = e.response.data.message;
+        });
     },
     fetchUsers() {
       UserService.getAllUsers()
