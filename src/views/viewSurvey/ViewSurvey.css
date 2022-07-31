@@ -9,6 +9,8 @@
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 10px 30px #2a2a2a6c;
+    max-height: 500px;
+    overflow: scroll;
 }
 
 .viewSurvey__question h5 {
@@ -28,6 +30,11 @@
     padding: 10px;
     border-radius: 5px;
     border: 1px solid var(--fadedGrey);
+}
+.response{
+    width: 100%;
+    margin: 5px 0 ;
+    display: inline-block;
 }
 
 .highlight {
