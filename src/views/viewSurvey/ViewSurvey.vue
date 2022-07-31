@@ -55,6 +55,20 @@
           >
         </section>
         <!-- QUESTIONS RESPONSE LIST -->
+        <section v-if="question.response && question.response.length > 0">
+          <br />
+          <h3>QUESTION REPONSES</h3>
+          <div v-for="item in question.response" :key="item.id">
+            <span class="viewSurvey__choice response">{{
+              `${item.enduser.email} -> SUBMITTED -> ${item.response}`
+            }}</span>
+          </div>
+        </section>
+        <span
+          v-if="question.response && question.response.length <= 0"
+          class="viewSurvey__choice response error__msg"
+          >NO RESPONSES FOUND FOR THIS QUESTION</span
+        >
       </li>
     </ul>
   </div>
