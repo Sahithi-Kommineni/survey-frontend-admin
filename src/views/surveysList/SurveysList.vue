@@ -7,7 +7,8 @@
       <h5>
         Manage <span v-if="this.userId">{{ userName }}</span> surveys
       </h5>
-    </div>x
+    </div>
+    x
     <table>
       <thead>
         <tr>
@@ -69,6 +70,14 @@
               </v-icon>
               <v-icon
                 large
+                color="green"
+                class="icon"
+                @click="pushToUpdate(survey.id)"
+              >
+                mdi-pencil
+              </v-icon>
+              <v-icon
+                large
                 color="red darken-2"
                 class="icon"
                 @click="deleteSurvey(survey.id)"
@@ -116,6 +125,9 @@ export default {
   methods: {
     pushToView(id) {
       this.$router.push({ name: "viewSurvey", params: { id } });
+    },
+    pushToUpdate(id) {
+      this.$router.push({ name: "updateSurvey", params: { surveyId: id } });
     },
     deleteSurvey(id) {
       SurveyService.deleteSurvey(id)

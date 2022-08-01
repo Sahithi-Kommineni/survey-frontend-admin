@@ -1,9 +1,8 @@
 <template>
   <div class="create__survey">
     <div class="createUser__topHeadings">
-      <h1 class="primary__heading">Create Survey</h1>
+      <h1 class="primary__heading">{{ surveyId ? "Update" : "Create" }} Survey</h1>
     </div>
-    <h5 class="error__msg">{{ message }}</h5>
     <v-form class="createSurvey__form" @submit="handleCreateSurvey">
       <div class="createSurvey__left">
         <v-text-field
@@ -112,7 +111,10 @@
             </div>
           </div>
         </div>
-        <button type="submit" class="button__lightGreen">Create Survey</button>
+        <h5 class="error__msg">{{ message }}</h5>
+        <button type="submit" class="button__lightGreen">
+          {{ surveyId ? "Update" : "Create" }} Survey
+        </button>
         <span class="scrollTo"></span>
       </div>
     </v-form>
@@ -122,6 +124,7 @@
 import SurveyService from "../../services/SurveyService";
 import { FormTextBoxObj } from "./surveyHelper";
 export default {
+  props: ["surveyId"],
   data() {
     return {
       message: "",
@@ -137,7 +140,7 @@ export default {
           },
         ],
         questionType: "",
-        questionChoices: ["text", "mcq", "paragraph"],
+        questionChoices: ["text", "mcq"],
       },
       rules: {
         required: (value) => !!value || `Field Required !`,
@@ -155,9 +158,6 @@ export default {
       switch (this.survey.questionType) {
         case "text":
           questions = [...questions, new FormTextBoxObj("text")];
-          break;
-        case "paragraph":
-          questions = [...questions, new FormTextBoxObj("paragraph")];
           break;
         case "mcq":
           questions = [
@@ -196,6 +196,28 @@ export default {
         (_, i) => i !== optionId
       );
     },
+    fetchSurveyDetails() {
+      SurveyService.getSurvey(this.surveyId)
+        .then((response) => {
+          const apiRes = response.data;
+          console.log("response", apiRes);
+          this.survey.title = apiRes.title;
+          this.survey.description = apiRes.description;
+          this.survey.isPublished = apiRes.isPublished;
+          const formQuestions = apiRes.question.map((ques) => {
+            return {
+              ...ques,
+              title: ques.question,
+              choices: ques.choice,
+            };
+          });
+          this.survey.questions = formQuestions;
+          this.survey.questionType = "text";
+        })
+        .catch((e) => {
+          this.message = e.response.data.message;
+        });
+    },
     handleCreateSurvey(e) {
       e.preventDefault();
       const { title, description, isPublished, questions } = this.survey;
@@ -205,14 +227,46 @@ export default {
         isPublished,
         questions,
       };
-      SurveyService.createSurvey(surveyData)
-        .then((response) => {
-          this.$router.push({ name: "surveys" });
-        })
-        .catch((e) => {
-          this.message = e.response.data.message;
+      if (this.surveyId) {
+        const updateQuestions = questions.map((ques) => {
+          const newQuest = ques;
+          delete newQuest.question;
+          delete newQuest.choice;
+          return newQuest;
         });
+        surveyData.questions = updateQuestions;
+        SurveyService.updateSurvey(surveyData, this.surveyId)
+          .then((response) => {
+            this.$router.push({ name: "surveys" });
+          })
+          .catch((e) => {
+            this.message = e.response.data.message;
+          });
+      } else {
+        SurveyService.createSurvey(surveyData)
+          .then((response) => {
+            this.$router.push({ name: "surveys" });
+          })
+          .catch((e) => {
+            this.message = e.response.data.message;
+          });
+      }
     },
+  },
+  mounted() {
+    if (this.surveyId) {
+      this.fetchSurveyDetails();
+    }
+    this.$watch(
+      () => this.$route.params,
+      () => {
+        this.survey.title = "";
+        this.survey.description = "";
+        this.survey.isPublished = false;
+        this.survey.questions = [];
+        this.survey.questionType = "";
+      }
+    );
   },
 };
 </script>
