@@ -159,7 +159,7 @@ export default {
     },
     sendMail(surveyId) {
       const linkData = {
-        surveyLink: `http://54.162.114.150/survey-frontend-survey/${surveyId}/`,
+        link: `http://54.162.114.150/survey-frontend-survey/${surveyId}/`,
         email: this.clientEmail,
       };
       SurveyService.shareLink(linkData)

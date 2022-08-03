@@ -44,7 +44,7 @@ class SurveyService {
         });
     }
     shareLink(linkData) {
-        return http.post(`/survey/sendemail`, linkData, {
+        return http.post(`/survey/sharelink`, linkData, {
             headers: {
                 'Authorization': localStorage.getItem('token')
             }
