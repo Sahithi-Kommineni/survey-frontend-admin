@@ -62,7 +62,7 @@
             class="viewSurvey__choice"
             v-for="(item, i) in question.choice"
             :key="i"
-            >{{ item.choice }} - Option Selected Count -
+            >{{ item.choice }} -- Option Selected Count :
             {{ item.totalcount ? item.totalcount : 0 }}</span
           >
         </section>
@@ -146,9 +146,9 @@ export default {
     grid-template-columns: 1fr;
   }
   .viewSurvey__heading--right {
-  padding: 25px;
-  border-top: 1px solid var(--fadedGrey);
-  border-left: none;
-}
+    padding: 25px;
+    border-top: 1px solid var(--fadedGrey);
+    border-left: none;
+  }
 }
 </style>
