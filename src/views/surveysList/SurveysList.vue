@@ -33,22 +33,10 @@
             ></v-switch>
             <div class="overlay" v-if="openModal === true">
               <v-form class="modal">
-                <h1>ENTER CLIENT EMAIL ID</h1>
-                <v-text-field
-                  v-model="clientEmail"
-                  label="Enter client email id"
-                  :rules="[rules.required, rules.email]"
-                  class="dialog__input"
-                ></v-text-field>
                 <span class="icon dialog__close--icon" @click="closeDialog">
                   X
                 </span>
-                <button
-                  @click="sendMail(survey.id)"
-                  class="button__lightGreen share__btn"
-                >
-                  SEND SURVEY LINK
-                </button>
+                <h1>SURVEY LINK COPIED TO CLIPBOARD</h1>
               </v-form>
             </div>
           </td>
@@ -89,7 +77,7 @@
                 color="white darken-2"
                 class="icon"
                 v-show="survey.isPublished"
-                @click="openDialog"
+                @click="copyToClipBoard(survey.id)"
               >
                 mdi-share
               </v-icon>
@@ -193,6 +181,16 @@ export default {
           .catch((e) => {
             this.message = e.response.data.message;
           });
+      }
+    },
+    async copyToClipBoard(surveyId) {
+      try {
+        await navigator.clipboard.writeText(
+          `http://18.206.127.116/survey-frontend-survey/${surveyId}/`
+        );
+        this.openModal = true;
+      } catch (err) {
+        console.error("Failed to copy: ", err);
       }
     },
   },
