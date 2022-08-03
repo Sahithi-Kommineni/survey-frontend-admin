@@ -62,7 +62,8 @@
             class="viewSurvey__choice"
             v-for="(item, i) in question.choice"
             :key="i"
-            >{{ item.choice }}</span
+            >{{ item.choice }} - Option Selected Count -
+            {{ item.totalcount ? item.totalcount : 0 }}</span
           >
         </section>
         <!-- QUESTIONS RESPONSE LIST -->
