@@ -50,5 +50,12 @@ class SurveyService {
             }
         });
     }
+    getSurveyReport(surveyId) {
+        return http.get(`/survey/download/pdf/${surveyId}`, {
+            headers: {
+                "Authorization": localStorage.getItem('token')
+            }
+        });
+    }
 }
 export default new SurveyService();
