@@ -31,9 +31,21 @@ const routes = [
     props: true
   },
   {
+    path: "/update-survey/:surveyId",
+    name: "updateSurvey",
+    component: () => import("./views/createSurvey/CreateSurvey.vue"),
+    props: true
+  },
+  {
     path: "/view-survey/:id",
     name: "viewSurvey",
     component: () => import("./views/viewSurvey/ViewSurvey.vue"),
+    props: true
+  },
+  {
+    path: "/view-user/:userId",
+    name: "viewUser",
+    component: () => import("./views/surveysList/SurveysList.vue"),
     props: true
   }
 ];

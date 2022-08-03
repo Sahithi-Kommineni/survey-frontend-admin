@@ -12,13 +12,26 @@
           <th>Operations</th>
         </tr>
       </thead>
-      <tbody v-for="user in users">
+      <tbody v-for="user in users" :key="user.id">
         <tr>
           <td data-column="User Name">{{ user.username }}</td>
           <td data-column="Email">{{ user.email }}</td>
           <td data-column="Operations">
             <span class="operations__wrapper">
-              <v-icon large color="red darken-2" class="icon">
+              <v-icon
+                large
+                color="blue darken-2"
+                class="icon"
+                @click="pushToView(user.id)"
+              >
+                mdi-format-list-bulleted-type
+              </v-icon>
+              <v-icon
+                large
+                color="red darken-2"
+                class="icon"
+                @click="deleteUser(user.id)"
+              >
                 mdi-delete
               </v-icon>
             </span>
@@ -37,6 +50,19 @@ export default {
     };
   },
   methods: {
+    pushToView(id) {
+      console.log("id", id);
+      this.$router.push({ name: "viewUser", params: { userId: id } });
+    },
+    deleteUser(id) {
+      UserService.deleteUser(id)
+        .then(() => {
+          this.fetchUsers();
+        })
+        .catch((e) => {
+          this.message = e.response.data.message;
+        });
+    },
     fetchUsers() {
       UserService.getAllUsers()
         .then((res) => {

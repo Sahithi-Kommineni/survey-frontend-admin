@@ -15,5 +15,19 @@ class UserService {
             }
         });
     }
+    getUserData(userId) {
+        return http.get(`/admin/${userId}`, {
+            headers: {
+                "Authorization": localStorage.getItem('token')
+            }
+        });
+    }
+    deleteUser(userId) {
+        return http.delete(`/admin/${userId}`, {
+            headers: {
+                "Authorization": localStorage.getItem('token')
+            }
+        });
+    }
 }
 export default new UserService();
