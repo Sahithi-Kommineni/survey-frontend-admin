@@ -1,19 +1,30 @@
 <template>
   <div class="surveys__list">
     <div class="createUser__topHeadings">
-      <h1 class="primary__heading">Survey Details</h1>
-      <h5><span class="highlight">Survey Title :</span> {{ survey.title }}</h5>
-      <h5>
-        <span class="highlight">Survey Description :</span>
-        {{ survey.description }}
-      </h5>
-      <h5>
-        <span class="highlight"> Survey Status :</span>
-        {{ survey.isPublished ? "Published" : "UnPublished" }}
-      </h5>
-      <h5>
-        <span class="highlight">Survey Created By :</span> {{ survey.username }}
-      </h5>
+      <div class="viewSurvey__heading">
+        <div class="viewSurvey__heading--left">
+          <h1 class="primary__heading">Survey Details</h1>
+          <h5>
+            <span class="highlight">Survey Title :</span> {{ survey.title }}
+          </h5>
+          <h5>
+            <span class="highlight">Survey Description :</span>
+            {{ survey.description }}
+          </h5>
+          <h5>
+            <span class="highlight"> Survey Status :</span>
+            {{ survey.isPublished ? "Published" : "UnPublished" }}
+          </h5>
+          <h5>
+            <span class="highlight">Survey Created By :</span>
+            {{ survey.username }}
+          </h5>
+          <br />
+        </div>
+        <div class="viewSurvey__heading--right">
+          <ExportSurvey :exportData="exportData" :fileName="fileName" />
+        </div>
+      </div>
       <br />
       <h3 class="primary__heading">Survey Questions and Responses</h3>
     </div>
@@ -75,11 +86,17 @@
 </template>
 <script>
 import SurveyService from "../../services/SurveyService";
+import ExportSurvey from "./ExportReports.vue";
 export default {
   props: ["id"],
+  components: {
+    ExportSurvey,
+  },
   data() {
     return {
       survey: {},
+      exportData: [],
+      fileName: "",
       userRole: localStorage.getItem("role"),
     };
   },
@@ -93,11 +110,44 @@ export default {
           this.message = e.response.data.message;
         });
     },
+    fetchSurveyReportData() {
+      SurveyService.getSurveyReport(this.id)
+        .then((response) => {
+          this.exportData = response.data;
+          this.fileName = this.survey.title;
+        })
+        .catch((e) => {
+          this.message = e.response.data.message;
+        });
+    },
   },
   mounted() {
     this.fetchSurvey();
+    this.fetchSurveyReportData();
   },
 };
 </script>
 <style>
+.viewSurvey__heading {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 15px;
+}
+.viewSurvey__heading--right {
+  padding: 25px;
+  border-left: 1px solid var(--fadedGrey);
+  display: grid;
+  place-items: center;
+}
+
+@media screen and (max-width: 900px) {
+  .viewSurvey__heading {
+    grid-template-columns: 1fr;
+  }
+  .viewSurvey__heading--right {
+  padding: 25px;
+  border-top: 1px solid var(--fadedGrey);
+  border-left: none;
+}
+}
 </style>
